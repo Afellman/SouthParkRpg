@@ -1,0 +1,91 @@
+* {
+  font-family: "southpark";
+}
+@font-face {
+  font-family: "southpark";
+  src: url("../southpark.ttf")
+}
+body {  
+
+  background-image: url("../images/spbg.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.char-row {
+  height: 200px;
+  /* margin-top: 50px; */
+}
+
+.choose-row {
+  margin-top: 150px;
+}
+
+.choose {
+  margin: 0 auto;
+}
+
+#stan {
+  background-image: url("../images/stan.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+#kyle {
+  background-image: url("../images/kyle.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+#kenny {
+  background-image: url("../images/kenny.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+#cartmen {
+  background-image: url("../images/cartmen.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.chars {
+  position: relative;
+  text-align: center;
+  color: black;
+  border: 10px solid rgb(204, 204, 204);
+  transition: .05s;
+  width: 200px;
+  margin: 20px;
+  height: 220px;
+}
+
+.char-select:hover {
+transform: scale(1.1)
+}
+
+.text-row {
+  padding: 10vh 0 10vh 0;
+}
+
+.fight-row {
+  padding: 0px 200px 0px 200px;
+  height: 220px;
+}
+
+.btn {
+  height: 10vh;
+  margin-top: 10%;
+}
+
+.stats {
+  margin-bottom: 0px;
+  padding-left: 35px;
+  position: absolute;
+  bottom: 0px;
+  /* left: 0px; */
+}
+
+.enemy {
+  background-color: red;
+}
