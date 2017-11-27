@@ -1,5 +1,7 @@
 
 $(document).ready(function () {
+  //GLOBAL VARIABLES
+
   // var to store chosen player and enemy
   var player;
   var enemy;
@@ -79,7 +81,7 @@ $(document).ready(function () {
     for (var key in charObj) {
       console.log(charObj[key])
       console.log(key);
-      var divInsert = '<div id="' + key + '" class="chars char-select rounded center bg-light">' + key + '<p class="stats">HP: ' + charObj[key]["hp"] + " AP: " +charObj[key]["ap"] + '</div>'
+      var divInsert = '<div id="' + key + '" class="chars char-select rounded center bg-dark text-white">' + key + '<p class="stats">HP: ' + charObj[key]["hp"] + " AP: " +charObj[key]["ap"] + '</div>'
       $(".char-row").append(divInsert)
     };
     clicks();
