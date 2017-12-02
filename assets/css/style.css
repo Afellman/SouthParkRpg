@@ -74,7 +74,7 @@ transform: scale(1.1)
   height: 220px;
 }
 
-.btn {
+.attack {
   height: 10vh;
   margin-top: 10%;
 }
@@ -90,3 +90,4 @@ transform: scale(1.1)
 .enemy {
   background-color: red;
 }
+

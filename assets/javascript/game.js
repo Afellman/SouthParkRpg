@@ -98,7 +98,7 @@ $(document).ready(function () {
   };
   //--------------------------------------------------------------
 
-  //can't get the .on('click') to register without calling it in a function...? (timeout after append?)
+  //function to listen for and react to clicks
   function clicks() {
     //listens for a click on a character
     $(".chars").on("click", function () {
@@ -186,10 +186,13 @@ $(document).ready(function () {
 
   //function for tell the user that they lost and ask if they want to play again
   function loseGame(){
-    var playAgain = prompt("you suck!");
-    if (playAgain) {
-      newGame();
-    }
+    $(".text-row").html('<h1>You Lose...</h1>');
+    setTimeout(function() {
+      $(".text-row").empty();
+      $(".text-row").append("<button class='play-again btn btn-primary p-3'>Play Again");
+      $(".play-again").on('click', newGame);
+    },800
+    );
   }
 
   //--------------------------------------------------------------
@@ -197,8 +200,14 @@ $(document).ready(function () {
   //function to tell the user they won and ask if they want to play again
   function winGame() {
     $(".text-row").html('<h1>You Win!!!!!!!!</h1>');
+    setTimeout(function() {
+      $(".text-row").empty();
+      $(".text-row").append("<button class='play-again btn btn-primary p-3'>Play Again");
+      $(".play-again").on('click', newGame);
+    },800
+    );
+    
+
   }
   newGame();
 });
-
-//todo: add game win and loose. Figure out ap/hp math. 
