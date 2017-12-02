@@ -6,7 +6,6 @@
   src: url("../southpark.ttf")
 }
 body {  
-
   background-image: url("../images/spbg.jpg");
   background-size: cover;
   background-repeat: no-repeat;
@@ -65,8 +64,9 @@ transform: scale(1.1)
 }
 
 .text-row {
+  height: 72px;
   font-size: 2.3em;
-  padding: 10vh 0 10vh 0;
+  /* padding: 10vh 0 10vh 0; */
 }
 
 .fight-row {
@@ -81,7 +81,7 @@ transform: scale(1.1)
 
 .stats {
   margin-bottom: 0px;
-  padding-left: 35px;
+  padding-left: 60px;
   position: absolute;
   bottom: 0px;
   /* left: 0px; */
@@ -91,3 +91,6 @@ transform: scale(1.1)
   background-color: red;
 }
 
+.game-over {
+  
+}
