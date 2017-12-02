@@ -1,4 +1,3 @@
-
 $(document).ready(function () {
   //GLOBAL VARIABLES
 
@@ -13,6 +12,7 @@ $(document).ready(function () {
   var charIsChosen = 0;
   var enemyIsChosen = 0;
 
+  var charLeft = 3;
   //object storing the character data
   var charObj = {
     stan: {
@@ -23,23 +23,31 @@ $(document).ready(function () {
 
     kyle: {
       "name": "Kyle",
-      "ap" : 10,
-      "hp" : 150
+      "ap" : 12,
+      "hp" : 120
     },
 
     kenny: {
       "name" : "Kenny",
-      "ap" : 7,
+      "ap" : 20,
       "hp" : 75
     },
 
     cartmen: {
       "name" : "Cartmen",
-      "ap": 25,
-      "hp": 100
+      "ap": 10,
+      "hp": 150
     },
   }
+  //--------------------------------------------------------------
 
+  //function to print characters 1 by 1.
+  var showText = function (target, message, index, interval) {   
+    if (index < message.length) {
+      $(target).append(message[index++]);
+      setTimeout(function () { showText(target, message, index, interval); }, interval);
+    }
+  }
   //function to start the game, resetting the page and redrawing the characters.
   function newGame (){
     $(".char-row").empty();
@@ -52,31 +60,33 @@ $(document).ready(function () {
     enemyIsChosen = 0;
     
     charObj = {
-    stan: {
-      "name": "Stan", 
-      "ap" : 15,
-      "hp": 115
-    },
-    
-    kyle: {
-      "name": "Kyle",
-      "ap" : 10,
-      "hp" : 150
-    },
-    
-    kenny: {
-      "name" : "Kenny",
-      "ap" : 7,
-      "hp" : 75
-    },
-    cartmen: {
-      "name" : "Cartmen",
-      "ap": 25,
-      "hp": 100
+      stan: {
+        "name": "Stan", 
+        "ap" : 15,
+        "hp": 115
+      },
       
-    },
+      kyle: {
+        "name": "Kyle",
+        "ap" : 10,
+        "hp" : 150
+      },
+      
+      kenny: {
+        "name" : "Kenny",
+        "ap" : 7,
+        "hp" : 75
+      },
+      cartmen: {
+        "name" : "Cartmen",
+        "ap": 25,
+        "hp": 100
+        
+      },
     }
-    $(".text-row").append("<h1>Choose Your Character!</h1>");
+    $(function () {
+      showText(".text-row", 'Choose Your Character!', 0, 40 )
+    });
     //draws the characters to the DOM
     for (var key in charObj) {
       console.log(charObj[key])
@@ -86,6 +96,8 @@ $(document).ready(function () {
     };
     clicks();
   };
+  //--------------------------------------------------------------
+
   //can't get the .on('click') to register without calling it in a function...? (timeout after append?)
   function clicks() {
     //listens for a click on a character
@@ -99,7 +111,10 @@ $(document).ready(function () {
         $(this).children("p").attr("class", function () { return $(this).attr("class") + " player-stats"});
         player = $(".player").attr("id");
         playerAp = charObj[player]['ap'];
-        $(".text-row").html('<h1 class="">Choose Your Enemy!</h1>')
+        $(function () {
+          $('.text-row').empty();
+          showText(".text-row", 'Choose Your Enemy!', 0, 40 )
+        });
       }
       //sets next click(s) to enemy and flips toggle.
       else if (enemyIsChosen == 0 ){
@@ -115,9 +130,14 @@ $(document).ready(function () {
       }
     });
   };
+  //--------------------------------------------------------------
+
     //function to start each round. addes
    function roundStart() {
-    $(".text-row").html('<h1 class="">Fight!</h1>');  
+    $(function () {
+      $('.text-row').empty();
+      showText(".text-row", 'FIGHT!', 0, 40 )
+    });
     $(".player").removeClass("char-select");
     $(".enemy").removeClass("char-select");
     $(".attack").on("click", function(){
@@ -126,34 +146,59 @@ $(document).ready(function () {
       charObj[player]["ap"] += playerAp; 
       $(".player-stats").text('HP: ' + charObj[player]["hp"] + " AP: " +charObj[player]["ap"]);
       $(".enemy-stats").text('HP: ' + charObj[enemy]["hp"] + " AP: " +charObj[enemy]["ap"]);
-      if (charObj[player]["hp"] <= 0){
-        loose();
-      }
-      else if (charObj[enemy]["hp"] <= 0) {
+      if (charObj[enemy]["hp"] <= 0) {
         console.log(enemy);
         $(".enemy").remove();
         $(".attack").remove();
         enemyIsChosen = 0;
-        $(".text-row").html('<h1 class="">Choose YOUR NEXT Enemy!</h1>');
+        $(function () {
+          $('.text-row').empty();
+          showText(".text-row", 'Owned!', 0, 40 );
+        });
+        charLeft -= 1;
+        console.log(charLeft);
+        if (charLeft == 0) {
+          console.log("wingame");
+          setTimeout(function() { 
+            winGame()}
+          , 800);
+          
+        }
+        else {
+          setTimeout(function() { 
+            $(function () {
+              $('.text-row').empty();
+              showText(".text-row", 'Choose Your Next Enemy!', 0, 40 );
+            });}
+          , 800);
         clicks();
+        };
+ 
+        
       }
-
+      else if (charObj[player]["hp"] <= 0){
+        loseGame();
+      }
       
     });
   };
+  //--------------------------------------------------------------
 
-    function loose(){
-      prompt("you suck!");
+  //function for tell the user that they lost and ask if they want to play again
+  function loseGame(){
+    var playAgain = prompt("you suck!");
+    if (playAgain) {
       newGame();
     }
+  }
 
-    // var attack = function(){
-    //   console.log("now attacking");
-    //   charObj[player]["hp"] -= charObj[enemy]["ap"]
-    //   $(".player-stats").text('HP: ' + charObj[player]["hp"] + " AP: " +charObj[player]["ap"]);
+  //--------------------------------------------------------------
 
-      
-    // }
-
+  //function to tell the user they won and ask if they want to play again
+  function winGame() {
+    $(".text-row").html('<h1>You Win!!!!!!!!</h1>');
+  }
   newGame();
 });
+
+//todo: add game win and loose. Figure out ap/hp math. 
